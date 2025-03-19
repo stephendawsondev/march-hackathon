@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from custom_storages import (
+    EmptySafeStaticCloudinaryStorage,
+    EmptySafeMediaCloudinaryStorage,
+)
 
 if os.path.isfile("env.py"):
     import env
@@ -159,8 +163,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# Media files configuration
 MEDIA_URL = "/media/"
 
 # Determine if we're running locally or in production
@@ -172,7 +174,6 @@ if IS_LOCAL:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-    # This ensures Django serves static files in development even with DEBUG=False
     STORAGES = {
         "staticfiles": {
             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -180,14 +181,12 @@ if IS_LOCAL:
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     }
 else:
-    # Production - use Cloudinary
-    STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    # Production - use custom Cloudinary storage that handles empty files
+    STATICFILES_STORAGE = "custom_storages.EmptySafeStaticCloudinaryStorage"
+    DEFAULT_FILE_STORAGE = "custom_storages.EmptySafeMediaCloudinaryStorage"
 
     # Cloudinary storage configuration using STORAGES
     STORAGES = {
-        "staticfiles": {
-            "BACKEND": "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
-        },
-        "default": {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"},
+        "staticfiles": {"BACKEND": "custom_storages.EmptySafeStaticCloudinaryStorage"},
+        "default": {"BACKEND": "custom_storages.EmptySafeMediaCloudinaryStorage"},
     }
