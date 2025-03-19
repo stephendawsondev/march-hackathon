@@ -1,1 +1,1 @@
-web: gunicorn myapp.wsgi
+web: gunicorn march_hackathon_placeholder.wsgi
