@@ -1,0 +1,48 @@
+name: User story issue template
+description: The standard user story issue template for the project
+title: "📖 USER STORY: <Brief description of story>"
+labels: ["user story"]
+body:
+  - type: textarea
+    id: related-epic
+    attributes:
+      label: If applicable, add a related Epic.
+      value: "Epic: <Link epic if applicable>"
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      value: "As a **user**, I can **do some action** so that I can **achieve some goal**."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: |
+        List the criteria that must be achieved for the story to be considered complete.
+      placeholder: "List the acceptance criteria here."
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ### Standard Tasks Checklist
+  - type: textarea
+    id: standard-tasks
+    attributes:
+      label: Please ensure you've completed these tasks before marking the issue as done.
+      value: |
+        - [ ] Reviewed the user story for clarity and completeness.
+        - [ ] Identified and linked related issues or epics.
+        - [ ] Updated the issue with any relevant notes or feedback (to date).
+  - type: markdown
+    attributes:
+      value: |
+        ### Further tasks
+  - type: textarea
+    id: further-tasks
+    attributes:
+      label: Please add any further tasks that need to be completed before the issue can be marked as done.
+      value: |
+        - [ ]

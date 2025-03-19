@@ -1,0 +1,64 @@
+name: Bug Report
+description: Template to report bugs or unexpected behavior.
+title: "🐛 BUG: <Brief description of the bug>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Bug Description
+        Provide a clear and concise description of what the bug is, including the expected behavior and what actually happened.
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the Bug
+      placeholder: "Provide a detailed description of the bug."
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Reproduction Steps
+        Please list the steps needed to reproduce the bug.
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: "1. Go to '...'\n2. Click on '...'\n3. Scroll down to '...'\n4. See the error"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Screenshots or Logs
+        If applicable, add screenshots or logs to help explain the problem.
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Attach Screenshots or Logs
+      description: |
+        You can drag and drop images or paste logs directly into the text area.
+      placeholder: "Upload any relevant screenshots or paste logs here."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+    validations:
+      required: false
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Informatiom
+      placeholder: "Any additional information that might be helpful in resolving the bug."
+    validations:
+      required: false
