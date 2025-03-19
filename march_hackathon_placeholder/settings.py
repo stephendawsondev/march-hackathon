@@ -155,23 +155,39 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+# Static files configuration
 STATIC_URL = "/static/"
-
-STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+# Media files configuration
 MEDIA_URL = "/media/"
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# Determine if we're running locally or in production
+IS_LOCAL = os.path.isfile("env.py")
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+if IS_LOCAL:
+    # Local development - use Django's static file serving
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+    # This ensures Django serves static files in development even with DEBUG=False
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        },
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    }
+else:
+    # Production - use Cloudinary
+    STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+    # Cloudinary storage configuration using STORAGES
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+        },
+        "default": {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"},
+    }
