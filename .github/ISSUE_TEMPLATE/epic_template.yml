@@ -15,12 +15,6 @@ body:
       placeholder: "Provide a clear and concise description of the epic."
     validations:
       required: true
-
-  - type: markdown
-    attributes:
-      value: |
-        ## User Stories
-        List the user stories that are part of this epic or link to existing issues.
   - type: textarea
     id: user-stories
     attributes:
