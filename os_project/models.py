@@ -90,6 +90,11 @@ class Project(models.Model):
             return 0
         return min(100, int((self.current_funding / self.funding_goal) * 100))
 
+    def get_technologies_list(self):
+        if self.technologies:
+            return [tech.strip() for tech in self.technologies.split(",")]
+        return []
+
 
 class ProjectInterest(models.Model):
     """Track Women in Tech who are interested in a project"""
