@@ -13,10 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-from custom_storages import (
-    EmptySafeStaticCloudinaryStorage,
-    EmptySafeMediaCloudinaryStorage,
-)
+
+if not os.path.isfile("env.py"):
+    from custom_storages import (
+        EmptySafeStaticCloudinaryStorage,
+        EmptySafeMediaCloudinaryStorage,
+    )
 
 if os.path.isfile("env.py"):
     import env
@@ -113,7 +115,7 @@ WSGI_APPLICATION = "march_hackathon_placeholder.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if os.path.isfile("env.py"):
+if os.path.exists(os.path.join(BASE_DIR, "env.py")):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
