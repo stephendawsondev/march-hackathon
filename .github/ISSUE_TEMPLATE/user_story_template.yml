@@ -4,11 +4,6 @@ title: "📖 USER STORY: <Brief description of story>"
 labels: ["user story"]
 body:
   - type: textarea
-    id: related-epic
-    attributes:
-      label: If applicable, add a related Epic.
-      value: "Epic: <Link epic if applicable>"
-  - type: textarea
     id: user-story
     attributes:
       label: User Story
