@@ -58,8 +58,46 @@ class WomenInTech(models.Model):
         Project, through=ContributionFocus, related_name="focused_by", blank=True
     )  # Need to create ContributionFocus model for WIT to display what they are currently working on
 
+    # Additional fields
+    about = models.TextField(blank=True)
+
     def get_absolute_url(self):
         return reverse("profile_detail", kwargs={"username": self.user.username})
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+
+    class OS_Maintainer(models.Model):
+        user = models.OneToOneField(
+            User, on_delete=models.CASCADE, related_name="profile"
+        )
+        image = CloudinaryField("image", blank=True, null=True)
+        created_at = models.DateTimeField(auto_now_add=True)
+        updated_at = models.DateTimeField(auto_now=True)
+
+        # role fields
+        is_os_maintainer = models.BooleanField(default=False)
+
+        # Maintainer fields
+        github_username = models.CharField(max_length=100, blank=True)
+        maintained_projects = models.ManyToManyField(
+            Project, blank=True
+        )  # Need to create project model
+        favourite_projects = models.ManyToManyField(
+            Project, through=FavouriteProject, related_name="favourited_by", blank=True
+        )  # Need to create Favourite project model for WIT to favourite project they are interested in
+        contribution_focus = models.ManyToManyField(
+            Project, through=ContributionFocus, related_name="focused_by", blank=True
+        )  # Need to create ContributionFocus model for WIT to display what they are currently working on
+
+        # Additional fields
+        about = models.TextField(blank=True)
+        sponsored_projects = models.ManyToManyField(
+            Project, related_name="sponsored_by", blank=True
+        )
+
+        def get_absolute_url(self):
+            return reverse("os_profile_detail", kwargs={"username": self.user.username})
+
+        def __str__(self):
+            return f"{self.user.username}'s OS Maintainer profile"
