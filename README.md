@@ -25,8 +25,8 @@ A modern Django project template with built-in authentication, user profiles, Ta
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/django-auth-tw-template.git
-   cd django-auth-tw-template
+   git clone https://github.com/stephendawsondev/march-hackathon.git
+   cd march-hackathon
    ```
 
 2. **Set up a virtual environment**
