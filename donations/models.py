@@ -49,3 +49,17 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.confirmation_number
+
+
+class ProjectFunding(models.Model):
+    project = models.ForeignKey("os_project.Project", on_delete=models.CASCADE)
+    payment = models.ForeignKey("Payment", on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class WITFunding(models.Model):
+    wit = models.ForeignKey("user_profile.WomenInTech", on_delete=models.CASCADE)
+    payment = models.ForeignKey("Payment", on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
