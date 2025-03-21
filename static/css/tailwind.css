@@ -3491,9 +3491,6 @@
     --btn-color: var(--color-secondary);
     --btn-fg: var(--color-secondary-content);
   }
-  .\[extra\:\{mismatch_marker_alternate\}\] {
-    extra: {mismatch marker alternate};
-  }
   .input-error {
     &, &:focus, &:focus-within {
       --input-color: var(--color-error);

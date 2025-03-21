@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.os_maintainer_profile %}
     <div class="flex justify-end mb-6">
         <a href="{% url 'project_create' %}" class="btn btn-primary">
             Create New Project
