@@ -1,33 +1,40 @@
+import json
+import os
+
 import stripe
 from django.conf import settings
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+from donations.models import Payment
+
+
+@require_POST
+def cache_donation_data(request):
+    try:
+        pid = request.POST.get("client_secret").split("_secret")[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(
+            pid,
+            metadata={
+                "donation_data": json.dumps(request.session.get("donate", {})),
+                "save_info": request.POST.get("save_info"),
+                "username": request.user.username,
+            },
+        )
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(
+            request,
+            "Sorry, your payment cannot be processed right now. Please try again later.",
+        )
+        return HttpResponse(content=e, status=400)
 
 
 # Create your views here.
-def create_payment_session(request):
-    try:
-        session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
-            line_items=[
-                {
-                    "price_data": {
-                        "currency": "gbp",
-                        "product_data": {
-                            "name": "Project Funding",
-                        },
-                        "unit_amount": int(request.post.get("amount") * 100),
-                    },
-                    "quantity": 1,
-                }
-            ],
-            mode="payment",
-            success_url=request.build_absolute_uri("/payment/success/"),
-            cancel_url=request.build_absolute_uri("/payment/cancel"),
-        )
-        return JsonResponse({"sessionId": session.id})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=400)
+def donations(request):
+    stripe_public_key = os.environ.get("STRIPE_PUBLIC_KEY", "")
+    stripe_secret_key = os.environ.get("STRIPE_SECRET_KEY", "")

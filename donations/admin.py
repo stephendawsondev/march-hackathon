@@ -1,20 +1,42 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
+
+from .models import Payment, ProjectFunding, WITFunding
+
 # from import_export.admin import ImportExportModelAdmin # ImportExportModel functionality
 
-# UPDATE THE BELOW IMPORTS WITH THE APP'S MODEL
-# AND UNCOMMENT:
-# from .models import DonationsModel
 
-# @admin.register(DonationsModel)
-# class CustomAdminClass(ModelAdmin):
-#     pass
+class OrderAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        "confirmation_number",
+        "created_at",
+        "grand_total",
+        "stripe_payment_intent_id",
+    )
+    field = (
+        "confirmation_number",
+        "amount",
+        "created_at",
+        "full_name",
+        "email",
+        "phone_number",
+        "street_address1",
+        "street_address2",
+        "postcode",
+        "town_or_city",
+        "county",
+        "country",
+        "grand_total",
+    )
+    list_display = (
+        "confirmation_number",
+        "created_at",
+        "full_name",
+        "grand_total",
+    )
+    ordering = ("-created_at",)
 
-# -- OR -- THIS WITH IMPORT/EXPORT FUNCTIONALITY:
 
-# class MyAppAdmin(ImportExportModelAdmin):
-#     resource_classes = [MyAppResource]
-
-# @admin.register(DonationsModel, MyAppAdmin)
-# class CustomAdminClass(ModelAdmin):
-#     pass
+admin.site.register(Payment, OrderAdmin)
+admin.site.register(ProjectFunding)
+admin.site.register(WITFunding)
