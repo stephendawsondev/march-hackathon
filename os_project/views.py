@@ -14,6 +14,7 @@ from django.db.models import Q
 
 from .models import Project, ProjectInterest
 from .forms import ProjectForm, ProjectInterestForm, ProjectSearchForm
+from user_profile.models import OS_Maintainer, WomenInTech
 
 
 # List views
@@ -71,9 +72,17 @@ class ProjectDetailView(DetailView):
         # Check if the user has already expressed interest in this project
         user_interested = False
         if self.request.user.is_authenticated:
-            user_interested = ProjectInterest.objects.filter(
-                project=self.object, user_id=self.request.user.id
-            ).exists()
+            # Check if user is a Women in Tech
+            try:
+                wit_profile = WomenInTech.objects.get(user=self.request.user)
+                user_interested = ProjectInterest.objects.filter(
+                    project=self.object, wit=wit_profile
+                ).exists()
+            except WomenInTech.DoesNotExist:
+                # Fallback to legacy check based on user_id
+                user_interested = ProjectInterest.objects.filter(
+                    project=self.object, user_id=self.request.user.id
+                ).exists()
 
         context["user_interested"] = user_interested
         context["interest_form"] = ProjectInterestForm()
@@ -82,6 +91,15 @@ class ProjectDetailView(DetailView):
         context["interest_count"] = ProjectInterest.objects.filter(
             project=self.object
         ).count()
+
+        # Check if user is the owner
+        if self.request.user.is_authenticated:
+            try:
+                osm_profile = OS_Maintainer.objects.get(user=self.request.user)
+                context["is_owner"] = self.object.owner == osm_profile
+            except OS_Maintainer.DoesNotExist:
+                # Fallback to legacy check
+                context["is_owner"] = self.object.owner_id == self.request.user.id
 
         return context
 
@@ -98,8 +116,14 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
-        # Set the owner to the current user
-        form.instance.owner_id = self.request.user.id
+        # Check if user is an OS Maintainer and set the owner
+        try:
+            osm_profile = OS_Maintainer.objects.get(user=self.request.user)
+            form.instance.owner = osm_profile
+        except OS_Maintainer.DoesNotExist:
+            # Fallback to setting just the owner_id
+            form.instance.owner_id = self.request.user.id
+
         messages.success(self.request, "Project created successfully!")
         return super().form_valid(form)
 
@@ -113,8 +137,15 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "os_project/project_form.html"
 
     def get_queryset(self):
-        # Only allow users to edit their own projects
-        return Project.objects.filter(owner_id=self.request.user.id)
+        # Get projects owned by current user (check both owner and owner_id)
+        user = self.request.user
+        queryset = Project.objects.all()
+
+        try:
+            osm_profile = OS_Maintainer.objects.get(user=user)
+            return queryset.filter(Q(owner=osm_profile) | Q(owner_id=user.id))
+        except OS_Maintainer.DoesNotExist:
+            return queryset.filter(owner_id=user.id)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -135,14 +166,21 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("project_list")
 
     def get_queryset(self):
-        # Only allow users to delete their own projects
-        return Project.objects.filter(owner_id=self.request.user.id)
+        # Get projects owned by current user (check both owner and owner_id)
+        user = self.request.user
+        queryset = Project.objects.all()
+
+        try:
+            osm_profile = OS_Maintainer.objects.get(user=user)
+            return queryset.filter(Q(owner=osm_profile) | Q(owner_id=user.id))
+        except OS_Maintainer.DoesNotExist:
+            return queryset.filter(owner_id=user.id)
 
     def delete(self, request, *args, **kwargs):
         project = self.get_object()
 
         # Check if a WIT is assigned to this project
-        if project.assigned_wit_id is not None:
+        if project.assigned_wit is not None or project.assigned_wit_id is not None:
             messages.error(
                 request,
                 "Cannot delete a project that has a Woman in Tech assigned to it.",
@@ -157,10 +195,18 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 def express_interest(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    user = request.user
+
+    # Check if user is a WomenInTech
+    try:
+        wit_profile = WomenInTech.objects.get(user=user)
+    except WomenInTech.DoesNotExist:
+        messages.error(request, "Only Women in Tech can express interest in projects.")
+        return redirect("project_detail", pk=project_id)
 
     # Check if user has already expressed interest
     existing_interest = ProjectInterest.objects.filter(
-        project=project, user_id=request.user.id
+        project=project, wit=wit_profile
     ).exists()
 
     if existing_interest:
@@ -172,7 +218,8 @@ def express_interest(request, project_id):
         if form.is_valid():
             interest = form.save(commit=False)
             interest.project = project
-            interest.user_id = request.user.id
+            interest.wit = wit_profile
+            interest.user_id = user.id  # for backward compatibility
             interest.save()
 
             messages.success(request, "Your interest has been recorded")
@@ -188,10 +235,20 @@ def express_interest(request, project_id):
 @login_required
 def withdraw_interest(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    user = request.user
 
-    interest = ProjectInterest.objects.filter(
-        project=project, user_id=request.user.id
-    ).first()
+    # Find interest based on WIT profile or user_id
+    interest = None
+    try:
+        wit_profile = WomenInTech.objects.get(user=user)
+        interest = ProjectInterest.objects.filter(
+            project=project, wit=wit_profile
+        ).first()
+    except WomenInTech.DoesNotExist:
+        # Fallback to legacy user_id
+        interest = ProjectInterest.objects.filter(
+            project=project, user_id=user.id
+        ).first()
 
     if interest:
         interest.delete()
@@ -205,8 +262,17 @@ def withdraw_interest(request, project_id):
 # Dashboard views for project owners
 @login_required
 def project_dashboard(request):
+    user = request.user
+
     # Get projects owned by the current user
-    owned_projects = Project.objects.filter(owner_id=request.user.id)
+    try:
+        osm_profile = OS_Maintainer.objects.get(user=user)
+        owned_projects = Project.objects.filter(
+            Q(owner=osm_profile) | Q(owner_id=user.id)
+        )
+    except OS_Maintainer.DoesNotExist:
+        # Fallback to just checking owner_id
+        owned_projects = Project.objects.filter(owner_id=user.id)
 
     return render(
         request, "os_project/project_dashboard.html", {"owned_projects": owned_projects}
@@ -216,9 +282,21 @@ def project_dashboard(request):
 @login_required
 def project_interested_users(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    user = request.user
 
     # Check if user is the owner
-    if project.owner_id != request.user.id:
+    is_owner = False
+    try:
+        osm_profile = OS_Maintainer.objects.get(user=user)
+        is_owner = project.owner == osm_profile
+    except OS_Maintainer.DoesNotExist:
+        pass
+
+    # Fallback to legacy check
+    if not is_owner:
+        is_owner = project.owner_id == user.id
+
+    if not is_owner:
         messages.error(request, "You are not authorized to view this page")
         return redirect("project_list")
 
@@ -235,18 +313,30 @@ def project_interested_users(request, project_id):
 def select_wit(request, project_id, interest_id):
     project = get_object_or_404(Project, pk=project_id)
     interest = get_object_or_404(ProjectInterest, pk=interest_id, project=project)
+    user = request.user
 
     # Check if user is the owner
-    if project.owner_id != request.user.id:
+    is_owner = False
+    try:
+        osm_profile = OS_Maintainer.objects.get(user=user)
+        is_owner = project.owner == osm_profile
+    except OS_Maintainer.DoesNotExist:
+        pass
+
+    # Fallback to legacy check
+    if not is_owner:
+        is_owner = project.owner_id == user.id
+
+    if not is_owner:
         messages.error(request, "You are not authorized to perform this action")
         return redirect("project_list")
 
     # Check if a WIT is already assigned
-    if project.assigned_wit_id is not None:
+    if project.assigned_wit is not None or project.assigned_wit_id is not None:
         messages.error(request, "A Woman in Tech is already assigned to this project")
         return redirect("project_detail", pk=project_id)
 
-    # Assign the WIT
+    project.assigned_wit = interest.wit
     project.assigned_wit_id = interest.user_id
     project.status = "ASSIGNED"
     project.save()
