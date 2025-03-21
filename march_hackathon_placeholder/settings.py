@@ -94,6 +94,12 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_ADAPTER = "user_profile.adapter.CustomAccountAdapter"
+ACCOUNT_FORMS = {
+    "signup": "user_profile.forms.CustomSignupForm",
+}
+
 
 TEMPLATES = [
     {
