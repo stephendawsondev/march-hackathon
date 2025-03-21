@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "import_export",
     "user_profile",
+    'os_project',
 ]
 
 MIDDLEWARE = [

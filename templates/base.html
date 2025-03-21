@@ -21,7 +21,9 @@
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'project_list' %}">Projects</a></li>
                     {% if user.is_authenticated %}
+                        <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
                         <li><a href="{% url 'profile_detail' username=user.username %}">Profile</a></li>
                         <li><a href="{% url 'account_logout' %}">Logout</a></li>
                     {% else %}
@@ -35,7 +37,9 @@
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'project_list' %}">Projects</a></li>
                 {% if user.is_authenticated %}
+                    <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
                     <li><a href="{% url 'profile_detail' username=user.username %}">Profile</a></li>
                 {% endif %}
             </ul>
