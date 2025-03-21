@@ -1,0 +1,74 @@
+[
+  {
+    "model": "os_project.project_tags",
+    "pk": 1,
+    "fields": {
+      "project": 1,
+      "projecttag": 2
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 2,
+    "fields": {
+      "project": 1,
+      "projecttag": 3
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 3,
+    "fields": {
+      "project": 1,
+      "projecttag": 5
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 4,
+    "fields": {
+      "project": 2,
+      "projecttag": 1
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 5,
+    "fields": {
+      "project": 2,
+      "projecttag": 4
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 6,
+    "fields": {
+      "project": 2,
+      "projecttag": 7
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 7,
+    "fields": {
+      "project": 3,
+      "projecttag": 2
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 8,
+    "fields": {
+      "project": 3,
+      "projecttag": 3
+    }
+  },
+  {
+    "model": "os_project.project_tags",
+    "pk": 9,
+    "fields": {
+      "project": 4,
+      "projecttag": 6
+    }
+  }
+]
