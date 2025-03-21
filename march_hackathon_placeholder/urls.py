@@ -9,5 +9,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("profile/", include("user_profile.urls")),
+    path("projects/", include("os_project.urls")),
     path("", include("home.urls")),
 ]

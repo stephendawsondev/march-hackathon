@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Open Source Projects{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'os_project/css/os_project.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold">Open Source Projects</h1>
+        <p class="text-lg">Find projects to contribute to or create your own</p>
+    </div>
+
+    <!-- Search and filter section -->
+    <div class="card bg-base-200 shadow-md mb-6">
+        <div class="card-body">
+            <form method="get" action="{% url 'project_list' %}" class="space-y-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="form-control flex-1">
+                        <div class="input-group">
+                            {{ search_form.search }}
+                            <button type="submit" class="btn btn-primary">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <select name="category" class="select select-bordered" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            {% for category in search_form.category.field.queryset %}
+                            <option value="{{ category.id }}" {% if search_form.category.value|stringformat:"i" == category.id|stringformat:"i" %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-control">
+                        <select name="status" class="select select-bordered" onchange="this.form.submit()">
+                            <option value="">All Status</option>
+                            {% for status_value, status_label in search_form.status.field.choices %}
+                            {% if status_value %}
+                            <option value="{{ status_value }}" {% if search_form.status.value == status_value %}selected{% endif %}>
+                                {{ status_label }}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-control">
+                        <select name="difficulty" class="select select-bordered" onchange="this.form.submit()">
+                            <option value="">All Difficulty Levels</option>
+                            {% for diff_value, diff_label in search_form.difficulty.field.choices %}
+                            {% if diff_value %}
+                            <option value="{{ diff_value }}" {% if search_form.difficulty.value == diff_value %}selected{% endif %}>
+                                {{ diff_label }}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <details class="collapse collapse-arrow bg-base-100">
+                    <summary class="collapse-title text-lg">Advanced Filters</summary>
+                    <div class="collapse-content">
+                        <div class="form-control">
+                            <label class="label font-bold">Tags</label>
+                            <div class="flex flex-wrap gap-2">
+                                {% for tag in search_form.tags.field.queryset %}
+                                <label class="label cursor-pointer gap-2">
+                                    <input type="checkbox" name="tags" value="{{ tag.id }}" class="checkbox checkbox-primary"
+                                        {% if tag.id|stringformat:"i" in search_form.tags.value|default:'' %}checked{% endif %}>
+                                    <span class="label-text">{{ tag.name }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="form-control mt-4">
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                            <a href="{% url 'project_list' %}" class="btn btn-outline mt-2">Clear Filters</a>
+                        </div>
+                    </div>
+                </details>
+            </form>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="flex justify-end mb-6">
+        <a href="{% url 'project_create' %}" class="btn btn-primary">
+            Create New Project
+        </a>
+    </div>
+    {% endif %}
+
+    {% if projects %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for project in projects %}
+        <div class="card bg-base-200 shadow-xl h-full hover:shadow-2xl transition-shadow duration-300">
+            {% if project.image %}
+            <figure class="h-48">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="object-cover w-full h-full">
+            </figure>
+            {% else %}
+            <figure class="h-48 bg-base-300 flex items-center justify-center">
+                <div class="text-5xl opacity-30">📝</div>
+            </figure>
+            {% endif %}
+
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <h2 class="card-title">{{ project.title }}</h2>
+
+                    {% if project.status == 'OPEN' %}
+                    <div class="badge badge-success">{{ project.get_status_display }}</div>
+                    {% elif project.status == 'ASSIGNED' %}
+                    <div class="badge badge-warning">{{ project.get_status_display }}</div>
+                    {% elif project.status == 'IN_PROGRESS' %}
+                    <div class="badge badge-info">{{ project.get_status_display }}</div>
+                    {% elif project.status == 'COMPLETED' %}
+                    <div class="badge badge-secondary">{{ project.get_status_display }}</div>
+                    {% endif %}
+                </div>
+
+                <p class="line-clamp-3">{{ project.description|truncatechars:150 }}</p>
+
+                <div class="flex flex-wrap gap-1 mt-2">
+                    <div class="badge badge-outline">{{ project.get_difficulty_display }}</div>
+                    {% if project.category %}
+                    <div class="badge badge-outline">{{ project.category.name }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-4">
+                    <div class="text-sm mb-1">Funding: {{ project.funding_percentage }}%</div>
+                    <progress class="progress progress-primary w-full" value="{{ project.funding_percentage }}" max="100"></progress>
+                </div>
+
+                <div class="card-actions justify-end mt-4">
+                    <a href="{% url 'project_detail' pk=project.pk %}" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="flex justify-center mt-8">
+        <div class="join">
+            {% if page_obj.has_previous %}
+            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page=1" class="join-item btn">«</a>
+            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}" class="join-item btn">‹</a>
+            {% endif %}
+
+            <button class="join-item btn btn-active">{{ page_obj.number }}</button>
+
+            {% if page_obj.has_next %}
+            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}" class="join-item btn">›</a>
+            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.paginator.num_pages }}" class="join-item btn">»</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="card bg-base-200 shadow-md">
+        <div class="card-body text-center">
+            <h3 class="text-xl mb-4">No projects found</h3>
+            <p>Try adjusting your search filters or create a new project.</p>
+
+            {% if user.is_authenticated %}
+            <div class="mt-6">
+                <a href="{% url 'project_create' %}" class="btn btn-primary">Create New Project</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
