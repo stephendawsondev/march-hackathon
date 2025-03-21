@@ -21,20 +21,6 @@ class Profile(models.Model):
         return f"{self.user.username}'s profile"
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    try:
-        instance.profile.save()
-    except Profile.DoesNotExist:
-        Profile.objects.create(user=instance)
-
-
 class WomenInTech(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="women_in_tech_profile"
@@ -118,6 +104,26 @@ class OS_Maintainer(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s OS Maintainer profile"
+
+
+class Mentor(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="mentor_profile"
+    )
+    image = CloudinaryField("image", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    expertise = models.CharField(max_length=200, blank=True)
+    years_of_experience = models.IntegerField(null=True, blank=True)
+    about = models.TextField(blank=True)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("profile_detail", kwargs={"username": self.user.username})
+
+    def __str__(self):
+        return f"{self.user.username}'s Mentor profile"
 
 
 class FavouriteProjectWIT(models.Model):

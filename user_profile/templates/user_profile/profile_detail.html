@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ profile_user.username }}'s Profile{% endblock %}
+{% block title %}
+{{ profile_user.username }}'s Profile
+{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
@@ -23,15 +25,23 @@
                 <div class="flex-1">
                     <h2 class="text-2xl font-bold">{{ profile_user.username }}</h2>
                     {% if profile_user.first_name or profile_user.last_name %}
-                        <p class="text-lg">{{ profile_user.first_name }} {{ profile_user.last_name }}</p>
+                        <p class="text-lg">
+                            {{ profile_user.first_name }} {{ profile_user.last_name }}
+                        </p>
                     {% endif %}
-                    <p class="opacity-70">Member since {{ profile_user.date_joined|date:"F j, Y" }}</p>
+                    <p class="opacity-70">
+                        Member since {{ profile_user.date_joined|date:"F j, Y" }}
+                    </p>
 
                     {% if user.is_authenticated and user == profile_user %}
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <a href="{% url 'profile_update' %}" class="btn btn-primary btn-sm">Edit Profile</a>
-                        <a href="{% url 'profile_delete' %}" class="btn btn-error btn-outline btn-sm">Delete Account</a>
-                    </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <a href="{% url 'profile_update' %}" class="btn btn-primary btn-sm">
+                                Edit Profile
+                            </a>
+                            <a href="{% url 'profile_delete' %}" class="btn btn-error btn-outline btn-sm">
+                                Delete Account
+                            </a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -62,6 +72,20 @@
                             <tr>
                                 <th>Last Name</th>
                                 <td>{{ profile_user.last_name|default:"Not provided" }}</td>
+                            </tr>
+                            <tr>
+                                <th>User Type</th>
+                                <td>
+                                    {% if profile_user.women_in_tech_profile %}
+                                        Women in Tech
+                                    {% elif profile_user.os_maintainer_profile %}
+                                        Open Source Maintainer
+                                    {% elif profile_user.mentor_profile %}
+                                        Mentor
+                                    {% else %}
+                                        Not specified
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Last Login</th>
