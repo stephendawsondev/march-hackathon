@@ -89,7 +89,7 @@
 
                     <!-- User actions -->
                     {% if user.is_authenticated %}
-                        {% if project.owner_id == user.id %}
+                        {% if is_owner %}
                             <div class="flex flex-wrap gap-2">
                                 <a href="{% url 'project_update' pk=project.pk %}" class="btn btn-secondary">
                                     Edit Project
@@ -97,7 +97,7 @@
                                 <a href="{% url 'project_interested_users' project_id=project.pk %}" class="btn btn-info">
                                     View Interested Users ({{ interest_count }})
                                 </a>
-                                {% if project.assigned_wit_id is None and project.status == 'OPEN' %}
+                                {% if not project.assigned_wit and not project.old_assigned_wit_id and project.status == 'OPEN' %}
                                 <a href="{% url 'project_delete' pk=project.pk %}" class="btn btn-error">
                                     Delete Project
                                 </a>
@@ -119,16 +119,20 @@
                                 <a href="{% url 'express_interest' project_id=project.pk %}" class="btn btn-primary">
                                     Express Interest
                                 </a>
-                                {% elif project.status == 'ASSIGNED' and project.assigned_wit_id == user.id %}
-                                <div class="alert alert-success mb-4">
-                                    <span>You are currently assigned to work on this project!</span>
-                                </div>
+                                {% elif project.status == 'ASSIGNED' %}
+                                    {% if user.women_in_tech_profile %}
+                                        {% if project.assigned_wit == user.women_in_tech_profile %}
+                                            <div class="alert alert-success mb-4">
+                                                <span>You are currently assigned to work on this project!</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                         {% endif %}
                     {% else %}
                         <div class="alert alert-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <div>
                                 <p>Sign in to express interest in this project.</p>
                                 <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary btn-sm mt-2">Sign In</a>
@@ -155,11 +159,34 @@
                         <p>{{ project.updated_at|date:"F j, Y" }}</p>
                     </div>
 
-                    {% if project.assigned_wit_id %}
+                    <div class="mb-4">
+                        <p class="text-sm opacity-75">Project Owner</p>
+                        {% if project.owner %}
+                            <p>{{ project.owner.user.username }}</p>
+                            {% if project.owner.github_username %}
+                                <p class="text-xs">GitHub: {{ project.owner.github_username }}</p>
+                            {% endif %}
+                        {% elif project.old_owner_id %}
+                            <p>User ID: {{ project.old_owner_id }}</p>
+                        {% else %}
+                            <p>Unknown</p>
+                        {% endif %}
+                    </div>
+
+                    {% if project.assigned_wit or project.old_assigned_wit_id %}
                     <div class="mb-4">
                         <p class="text-sm opacity-75">Assigned Developer</p>
-                        <p>{{ project.assigned_wit_id }}</p>
-                        <!-- TODO: Replace with actual WIT display when user profiles are implemented -->
+                        {% if project.assigned_wit %}
+                            <p>{{ project.assigned_wit.user.username }}</p>
+                            {% if project.assigned_wit.github_username %}
+                                <p class="text-xs">GitHub: {{ project.assigned_wit.github_username }}</p>
+                            {% endif %}
+                            {% if project.assigned_wit.tech_specialties %}
+                                <p class="text-xs">Specialties: {{ project.assigned_wit.tech_specialties }}</p>
+                            {% endif %}
+                        {% elif project.old_assigned_wit_id %}
+                            <p>User ID: {{ project.old_assigned_wit_id }}</p>
+                        {% endif %}
                     </div>
                     {% endif %}
 
