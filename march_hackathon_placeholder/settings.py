@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "import_export",
     "user_profile",
     'os_project',
+    'donations',
 ]
 
 MIDDLEWARE = [
