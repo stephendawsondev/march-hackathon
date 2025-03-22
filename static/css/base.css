@@ -7,6 +7,7 @@
   --highlight2: #7ED957;
   --highlight3: #DD1026;
   --highlight4: #8C52FF;
+  --highlight5: #F5A742;
   --bg: #F4F4F4; /* Light mode background */
   --text: #080D0F; /* Light mode text */
   --font-primary: 'Press Start 2P', sans-serif;
@@ -25,8 +26,26 @@ p {
   letter-spacing: 2px;
 }
 
+/* Team page styling */
+#iliana-card {
+  background-color: var(--highlight1);
+}
 
+#lucy-card {
+  background-color: var(--highlight2);
+}
 
+#soroush-card {
+  background-color: var(--highlight3);
+}
+
+#stephen-card {
+  background-color: var(--highlight4);
+}
+
+#warren-card {
+  background-color: var(--highlight5);
+}
 
 
 
