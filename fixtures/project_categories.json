@@ -1,0 +1,83 @@
+[
+  {
+    "model": "os_project.projectcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Web Framework",
+      "description": "Projects related to web frameworks and libraries"
+    }
+  },
+  {
+    "model": "os_project.projectcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Data Science",
+      "description": "Projects related to data analysis, machine learning, and visualization"
+    }
+  },
+  {
+    "model": "os_project.projectcategory",
+    "pk": 3,
+    "fields": {
+      "name": "DevOps",
+      "description": "Projects related to deployment, automation, and infrastructure"
+    }
+  },
+  {
+    "model": "os_project.projectcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Documentation",
+      "description": "Projects focusing on improving documentation and educational resources"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 1,
+    "fields": {
+      "name": "Python"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 2,
+    "fields": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 3,
+    "fields": {
+      "name": "React"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 4,
+    "fields": {
+      "name": "Django"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 5,
+    "fields": {
+      "name": "Accessibility"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 6,
+    "fields": {
+      "name": "Docker"
+    }
+  },
+  {
+    "model": "os_project.projecttag",
+    "pk": 7,
+    "fields": {
+      "name": "API"
+    }
+  }
+]

@@ -19,9 +19,7 @@ class ProjectInterestInline(admin.TabularInline):
     model = ProjectInterest
     extra = 0
     readonly_fields = ("created_at",)
-    fields = ("user_id", "note", "created_at")
-    # TODO: Update when user profiles are ready
-    # fields = ('wit', 'note', 'created_at')
+    fields = ("wit", "old_user_id", "note", "created_at")
 
 
 @admin.register(Project)
@@ -30,8 +28,8 @@ class ProjectAdmin(ModelAdmin):
         "title",
         "status",
         "difficulty",
-        "owner_id",
-        "assigned_wit_id",
+        "get_owner",
+        "get_assigned_wit",
         "funding_goal",
         "current_funding",
         "is_fully_funded",
@@ -63,9 +61,12 @@ class ProjectAdmin(ModelAdmin):
         (
             "Ownership",
             {
-                "fields": ("owner_id", "assigned_wit_id")
-                # TODO: Update when user profiles are ready
-                # 'fields': ('owner', 'assigned_wit')
+                "fields": (
+                    "owner",
+                    "old_owner_id",
+                    "assigned_wit",
+                    "old_assigned_wit_id",
+                )
             },
         ),
         (
@@ -80,12 +81,37 @@ class ProjectAdmin(ModelAdmin):
     is_fully_funded.boolean = True
     is_fully_funded.short_description = "Fully Funded"
 
+    def get_owner(self, obj):
+        if obj.owner:
+            return f"{obj.owner.user.username}"
+        elif obj.old_owner_id:
+            return f"ID: {obj.old_owner_id}"
+        return "-"
+
+    get_owner.short_description = "Owner"
+
+    def get_assigned_wit(self, obj):
+        if obj.assigned_wit:
+            return f"{obj.assigned_wit.user.username}"
+        elif obj.old_assigned_wit_id:
+            return f"ID: {obj.old_assigned_wit_id}"
+        return "-"
+
+    get_assigned_wit.short_description = "Assigned WIT"
+
 
 @admin.register(ProjectInterest)
 class ProjectInterestAdmin(ModelAdmin):
-    list_display = ("project", "user_id", "created_at")
-    # TODO: Update when user profiles are ready
-    # list_display = ('project', 'wit', 'created_at')
+    list_display = ("project", "get_wit_display", "created_at")
     list_filter = ("created_at",)
-    search_fields = ("project__title", "note")
+    search_fields = ("project__title", "note", "wit__user__username")
     readonly_fields = ("created_at",)
+
+    def get_wit_display(self, obj):
+        if obj.wit:
+            return f"{obj.wit.user.username}"
+        elif obj.old_user_id:
+            return f"User ID: {obj.old_user_id}"
+        return "-"
+
+    get_wit_display.short_description = "Woman in Tech"

@@ -1,0 +1,131 @@
+[
+  {
+    "model": "user_profile.profile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.profile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.profile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.profile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.profile",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.profile",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "user_profile.os_maintainer",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z",
+      "is_os_maintainer": true,
+      "github_username": "sarahj",
+      "about": "Open source enthusiast with focus on accessibility and web frameworks."
+    }
+  },
+  {
+    "model": "user_profile.os_maintainer",
+    "pk": 2,
+    "fields": {
+      "user": 6,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z",
+      "is_os_maintainer": true,
+      "github_username": "mark-dev",
+      "about": "Backend developer focused on database optimization and API design."
+    }
+  },
+  {
+    "model": "user_profile.womenintech",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z",
+      "is_woman_in_tech": true,
+      "tech_specialties": "Frontend development, UX/UI design, React",
+      "years_of_experience": 3,
+      "github_username": "emilyc-dev",
+      "about": "Frontend developer passionate about creating accessible user interfaces."
+    }
+  },
+  {
+    "model": "user_profile.womenintech",
+    "pk": 2,
+    "fields": {
+      "user": 4,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z",
+      "is_woman_in_tech": true,
+      "tech_specialties": "Backend development, Django, Database design",
+      "years_of_experience": 5,
+      "github_username": "juliam-dev",
+      "about": "Backend developer with expertise in Python and Django."
+    }
+  },
+  {
+    "model": "user_profile.mentor",
+    "pk": 1,
+    "fields": {
+      "user": 5,
+      "image": null,
+      "created_at": "2025-03-20T10:00:00Z",
+      "updated_at": "2025-03-20T10:00:00Z",
+      "expertise": "Full-stack development, Cloud infrastructure, DevOps",
+      "years_of_experience": 10,
+      "about": "Technical lead with experience mentoring junior developers."
+    }
+  }
+]

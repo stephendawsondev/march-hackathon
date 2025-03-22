@@ -27,7 +27,10 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'project_list' %}">Projects</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
+                        {% if user.os_maintainer_profile %}
+                            <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
+                            <li><a href="{% url 'project_create' %}">Create Project</a></li>
+                        {% endif %}
                         <li><a href="{% url 'profile_detail' username=user.username %}">Profile</a></li>
                         <li><a href="{% url 'account_logout' %}">Logout</a></li>
                     {% else %}
@@ -43,7 +46,10 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'project_list' %}">Projects</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
+                    {% if user.os_maintainer_profile %}
+                        <li><a href="{% url 'project_dashboard' %}">My Projects</a></li>
+                        <li><a href="{% url 'project_create' %}">Create Project</a></li>
+                    {% endif %}
                     <li><a href="{% url 'profile_detail' username=user.username %}">Profile</a></li>
                 {% endif %}
             </ul>

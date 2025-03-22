@@ -46,15 +46,24 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Placeholder fields - will be replaced with proper foreign keys later
-    owner_id = models.IntegerField(null=True, blank=True)
-    # TODO replace with when user_profile is finished:
-    # owner = models.ForeignKey('user_profile.OSMProfile', on_delete=models.CASCADE, related_name='owned_projects')
+    owner = models.ForeignKey(
+        "user_profile.OS_Maintainer",
+        on_delete=models.CASCADE,
+        related_name="owned_projects",
+        null=True,
+        blank=True,
+    )
+    old_owner_id = models.IntegerField(null=True, blank=True)
 
-    assigned_wit_id = models.IntegerField(null=True, blank=True)
-    # TODO replace with when user_profile is finished:
-    # assigned_wit = models.ForeignKey('user_profile.WITProfile', on_delete=models.SET_NULL,
-    #                                  null=True, blank=True, related_name='assigned_projects')
+    assigned_wit = models.ForeignKey(
+        "user_profile.WomenInTech",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="assigned_projects",
+    )
+    # Keep old_assigned_wit_id for backward compatibility during migration
+    old_assigned_wit_id = models.IntegerField(null=True, blank=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="OPEN")
     difficulty = models.CharField(
@@ -102,9 +111,15 @@ class ProjectInterest(models.Model):
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="interested_users"
     )
-    user_id = models.IntegerField()
-    # TODO replace with when user_profile is finished:
-    # wit = models.ForeignKey('user_profile.WITProfile', on_delete=models.CASCADE, related_name='project_interests')
+    wit = models.ForeignKey(
+        "user_profile.WomenInTech",
+        on_delete=models.CASCADE,
+        related_name="project_interests",
+        null=True,
+        blank=True,
+    )
+    # Keep for backward compatibility
+    old_user_id = models.IntegerField(null=True, blank=True)
 
     note = models.TextField(
         blank=True, help_text="Why are you interested in this project?"
@@ -112,11 +127,9 @@ class ProjectInterest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("project", "user_id")
-        # TODO replace with when user_profile is finished:
-        # unique_together = ('project', 'wit')
+        unique_together = ("project", "wit")
 
     def __str__(self):
-        return f"Interest in {self.project.title} (User: {self.user_id})"
-        # TODO replace with when user_profile is finished:
-        # return f"Interest in {self.project.title} by {self.wit.user.username}"
+        if self.wit:
+            return f"Interest in {self.project.title} by {self.wit.user.username}"
+        return f"Interest in {self.project.title} (User: {self.old_user_id})"

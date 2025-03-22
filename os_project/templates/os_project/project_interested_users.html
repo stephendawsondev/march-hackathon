@@ -20,7 +20,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <div>
                     <p>These are Women in Tech who have expressed interest in working on your project.</p>
-                    {% if project.assigned_wit_id is None %}
+                    {% if not project.assigned_wit and not project.old_assigned_wit_id %}
                     <p>You can select one of them to work on your project.</p>
                     {% else %}
                     <p class="font-bold">A Woman in Tech is already assigned to this project.</p>
@@ -43,8 +43,28 @@
                         {% for interest in interested_users %}
                         <tr class="hover">
                             <td>
-                                <div class="font-bold">User ID: {{ interest.user_id }}</div>
-                                <!-- TODO: Replace with actual user display when user profiles are implemented -->
+                                {% if interest.wit %}
+                                    <div class="flex items-center gap-3">
+                                        {% if interest.wit.image %}
+                                        <div class="avatar">
+                                            <div class="mask mask-squircle w-12 h-12">
+                                                <img src="{{ interest.wit.image.url }}" alt="{{ interest.wit.user.username }}">
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        <div>
+                                            <div class="font-bold">{{ interest.wit.user.username }}</div>
+                                            {% if interest.wit.tech_specialties %}
+                                            <div class="text-sm opacity-50">{{ interest.wit.tech_specialties }}</div>
+                                            {% endif %}
+                                            {% if interest.wit.github_username %}
+                                            <div class="text-xs">GitHub: {{ interest.wit.github_username }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% elif interest.old_user_id %}
+                                <div class="font-bold">User ID: {{ interest.old_user_id }}</div>
+                                {% endif %}
                             </td>
                             <td>{{ interest.created_at|date:"M d, Y" }}</td>
                             <td>
@@ -68,7 +88,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if project.assigned_wit_id is None %}
+                                {% if not project.assigned_wit and not project.old_assigned_wit_id %}
                                 <a href="{% url 'select_wit' project_id=project.pk interest_id=interest.id %}"
                                    class="btn btn-primary btn-sm"
                                    onclick="return confirm('Are you sure you want to select this user to work on your project?')">

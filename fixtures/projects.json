@@ -1,0 +1,94 @@
+[
+  {
+    "model": "os_project.project",
+    "pk": 1,
+    "fields": {
+      "title": "Accessible UI Component Library",
+      "description": "A library of accessible React components that meet WCAG 2.1 standards. Looking for contributors to help build new components and improve documentation.",
+      "repo_link": "https://github.com/example/accessible-ui",
+      "deploy_link": "https://accessible-ui-demo.example.com",
+      "image": null,
+      "created_at": "2025-03-15T14:30:00Z",
+      "updated_at": "2025-03-15T14:30:00Z",
+      "old_owner_id": 2,
+      "owner": 1,
+      "old_assigned_wit_id": null,
+      "assigned_wit": null,
+      "status": "OPEN",
+      "difficulty": "INTERMEDIATE",
+      "funding_goal": "5000.00",
+      "current_funding": "1200.00",
+      "category": 1,
+      "technologies": "React, TypeScript, CSS, Storybook"
+    }
+  },
+  {
+    "model": "os_project.project",
+    "pk": 2,
+    "fields": {
+      "title": "Django API Performance Toolkit",
+      "description": "A toolkit for optimizing Django REST Framework APIs. Includes middleware for caching, profiling tools, and database query optimization helpers.",
+      "repo_link": "https://github.com/example/django-perf-toolkit",
+      "deploy_link": "",
+      "image": null,
+      "created_at": "2025-03-10T09:15:00Z",
+      "updated_at": "2025-03-20T11:45:00Z",
+      "old_owner_id": 6,
+      "owner": 2,
+      "old_assigned_wit_id": 4,
+      "assigned_wit": 2,
+      "status": "ASSIGNED",
+      "difficulty": "ADVANCED",
+      "funding_goal": "7500.00",
+      "current_funding": "3000.00",
+      "category": 1,
+      "technologies": "Python, Django, PostgreSQL, Redis"
+    }
+  },
+  {
+    "model": "os_project.project",
+    "pk": 3,
+    "fields": {
+      "title": "Data Visualization Dashboard",
+      "description": "A customizable dashboard for creating interactive data visualizations. Supports multiple data sources and export formats.",
+      "repo_link": "https://github.com/example/viz-dashboard",
+      "deploy_link": "https://viz-dashboard-demo.example.com",
+      "image": null,
+      "created_at": "2025-03-05T16:45:00Z",
+      "updated_at": "2025-03-18T10:30:00Z",
+      "old_owner_id": 2,
+      "owner": 1,
+      "old_assigned_wit_id": 3,
+      "assigned_wit": 1,
+      "status": "IN_PROGRESS",
+      "difficulty": "INTERMEDIATE",
+      "funding_goal": "4000.00",
+      "current_funding": "4000.00",
+      "category": 2,
+      "technologies": "React, D3.js, JavaScript, CSS"
+    }
+  },
+  {
+    "model": "os_project.project",
+    "pk": 4,
+    "fields": {
+      "title": "Docker Deployment Guide",
+      "description": "A comprehensive guide to deploying web applications using Docker and Docker Compose. Includes tutorials for various frameworks and deployment environments.",
+      "repo_link": "https://github.com/example/docker-deployment-guide",
+      "deploy_link": "https://docker-guide.example.com",
+      "image": null,
+      "created_at": "2025-03-01T11:00:00Z",
+      "updated_at": "2025-03-01T11:00:00Z",
+      "old_owner_id": 6,
+      "owner": 2,
+      "old_assigned_wit_id": null,
+      "assigned_wit": null,
+      "status": "OPEN",
+      "difficulty": "BEGINNER",
+      "funding_goal": "2500.00",
+      "current_funding": "500.00",
+      "category": 4,
+      "technologies": "Docker, Markdown, Bash, YAML"
+    }
+  }
+]
