@@ -733,19 +733,6 @@
     padding-right: 1rem;
     cursor: unset;
   }
-<<<<<<< HEAD
-  .collapse-open {
-    grid-template-rows: max-content 1fr;
-    > .collapse-content {
-      visibility: visible;
-      min-height: fit-content;
-      padding-bottom: 1rem;
-      transition: padding 0.2sease-out,
-      background-color 0.2sease-out;
-    }
-  }
-=======
->>>>>>> a3b88dd3ed80b45e46b4b9d35466efbd86d85ea7
   .collapse {
     visibility: collapse;
   }
@@ -1818,12 +1805,6 @@
     --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
     isolation: isolate;
   }
-<<<<<<< HEAD
-  .isolate {
-    isolation: isolate;
-  }
-=======
->>>>>>> a3b88dd3ed80b45e46b4b9d35466efbd86d85ea7
   .z-\[1\] {
     z-index: 1;
   }
@@ -2393,12 +2374,6 @@
   .flex-grow {
     flex-grow: 1;
   }
-<<<<<<< HEAD
-  .border-collapse {
-    border-collapse: collapse;
-  }
-=======
->>>>>>> a3b88dd3ed80b45e46b4b9d35466efbd86d85ea7
   .swap-rotate {
     .swap-on, input:indeterminate ~ .swap-on {
       rotate: 45deg;
@@ -2683,15 +2658,6 @@
   .text-white {
     color: var(--color-white);
   }
-<<<<<<< HEAD
-  .lowercase {
-    text-transform: lowercase;
-  }
-  .uppercase {
-    text-transform: uppercase;
-  }
-=======
->>>>>>> a3b88dd3ed80b45e46b4b9d35466efbd86d85ea7
   .link-hover {
     text-decoration-line: none;
     &:hover {
