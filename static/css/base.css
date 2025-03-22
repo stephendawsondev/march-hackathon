@@ -1,3 +1,35 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Orbitron:wght@400..900&family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap');
+
+/* Light Mode Variables */
+:root {
+  --highlight1: #0CC0DF;
+  --highlight2: #7ED957;
+  --highlight3: #DD1026;
+  --highlight4: #8C52FF;
+  --bg: #F4F4F4; /* Light mode background */
+  --text: #080D0F; /* Light mode text */
+  --font-primary: 'Press Start 2P', sans-serif;
+  --font-secondary: 'Orbitron', sans-serif;
+}
+
+h1,
+h2,
+h3,
+a {
+  font-family: var(--font-primary);
+}
+
+p {
+  font-family: var(--font-secondary);
+  letter-spacing: 2px;
+}
+
+
+
+
+
+
 .error-container {
   text-align: center;
   padding: 40px 20px;
