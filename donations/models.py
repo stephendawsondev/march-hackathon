@@ -1,5 +1,6 @@
 import uuid
 from decimal import Decimal
+from typing import Optional
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -20,7 +21,7 @@ class Payment(models.Model):
     postcode = models.CharField(max_length=20, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     county = models.CharField(max_length=80, null=True, blank=True)
-    country = CountryField(null=True, blank=True)
+    country = CountryField(blank_label="Country *", null=False, blank=False)  # type: ignore[call-overload]
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=20,
