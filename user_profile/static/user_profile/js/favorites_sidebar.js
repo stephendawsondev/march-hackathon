@@ -36,4 +36,20 @@ document.addEventListener("DOMContentLoaded", function () {
       sidebar.classList.add("closed");
     }
   });
+
+  // Click outside to close
+  document.addEventListener("click", function (e) {
+    const clickedInsideSidebar = sidebar.contains(e.target);
+    const clickedToggleButton = toggleBtn.contains(e.target);
+
+    if (
+      sidebar.classList.contains("open") &&
+      !clickedInsideSidebar &&
+      !clickedToggleButton
+    ) {
+      sidebar.classList.remove("open");
+      sidebar.classList.add("closed");
+      isLockedOpen = false;
+    }
+  });
 });
