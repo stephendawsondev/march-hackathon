@@ -2628,6 +2628,70 @@
   .border-collapse {
     border-collapse: collapse;
   }
+  .scale-10 {
+    --tw-scale-x: 10%;
+    --tw-scale-y: 10%;
+    --tw-scale-z: 10%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-20 {
+    --tw-scale-x: 20%;
+    --tw-scale-y: 20%;
+    --tw-scale-z: 20%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-25 {
+    --tw-scale-x: 25%;
+    --tw-scale-y: 25%;
+    --tw-scale-z: 25%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-30 {
+    --tw-scale-x: 30%;
+    --tw-scale-y: 30%;
+    --tw-scale-z: 30%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-40 {
+    --tw-scale-x: 40%;
+    --tw-scale-y: 40%;
+    --tw-scale-z: 40%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-45 {
+    --tw-scale-x: 45%;
+    --tw-scale-y: 45%;
+    --tw-scale-z: 45%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-50 {
+    --tw-scale-x: 50%;
+    --tw-scale-y: 50%;
+    --tw-scale-z: 50%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-75 {
+    --tw-scale-x: 75%;
+    --tw-scale-y: 75%;
+    --tw-scale-z: 75%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-x-25 {
+    --tw-scale-x: 25%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-x-50 {
+    --tw-scale-x: 50%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-x-75 {
+    --tw-scale-x: 75%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
+  .scale-x-125 {
+    --tw-scale-x: 125%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
   .swap-rotate {
     .swap-on, input:indeterminate ~ .swap-on {
       rotate: 45deg;
@@ -3111,6 +3175,22 @@
       }
     }
   }
+  .sm\:scale-10 {
+    @media (width >= 40rem) {
+      --tw-scale-x: 10%;
+      --tw-scale-y: 10%;
+      --tw-scale-z: 10%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .sm\:scale-20 {
+    @media (width >= 40rem) {
+      --tw-scale-x: 20%;
+      --tw-scale-y: 20%;
+      --tw-scale-z: 20%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
@@ -3125,6 +3205,38 @@
   .md\:flex {
     @media (width >= 48rem) {
       display: flex;
+    }
+  }
+  .md\:scale-30 {
+    @media (width >= 48rem) {
+      --tw-scale-x: 30%;
+      --tw-scale-y: 30%;
+      --tw-scale-z: 30%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .md\:scale-35 {
+    @media (width >= 48rem) {
+      --tw-scale-x: 35%;
+      --tw-scale-y: 35%;
+      --tw-scale-z: 35%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .md\:scale-38 {
+    @media (width >= 48rem) {
+      --tw-scale-x: 38%;
+      --tw-scale-y: 38%;
+      --tw-scale-z: 38%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .md\:scale-40 {
+    @media (width >= 48rem) {
+      --tw-scale-x: 40%;
+      --tw-scale-y: 40%;
+      --tw-scale-z: 40%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }
   .md\:grid-cols-2 {
@@ -3167,9 +3279,75 @@
       display: none;
     }
   }
+  .lg\:scale-25 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 25%;
+      --tw-scale-y: 25%;
+      --tw-scale-z: 25%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-30 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 30%;
+      --tw-scale-y: 30%;
+      --tw-scale-z: 30%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-32 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 32%;
+      --tw-scale-y: 32%;
+      --tw-scale-z: 32%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-35 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 35%;
+      --tw-scale-y: 35%;
+      --tw-scale-z: 35%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-40 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 40%;
+      --tw-scale-y: 40%;
+      --tw-scale-z: 40%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-45 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 45%;
+      --tw-scale-y: 45%;
+      --tw-scale-z: 45%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .lg\:scale-50 {
+    @media (width >= 64rem) {
+      --tw-scale-x: 50%;
+      --tw-scale-y: 50%;
+      --tw-scale-z: 50%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
   .lg\:grid-cols-3 {
     @media (width >= 64rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .lg\:grid-cols-4 {
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .lg\:grid-cols-5 {
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
 }
@@ -3531,6 +3709,21 @@
     --depth: 0;
     --noise: 0;
   }
+}
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
 }
 @property --tw-rotate-x {
   syntax: "*";
