@@ -38,3 +38,10 @@ def cache_donation_data(request):
 def donations(request):
     stripe_public_key = os.environ.get("STRIPE_PUBLIC_KEY", "")
     stripe_secret_key = os.environ.get("STRIPE_SECRET_KEY", "")
+
+    context = {
+        "stripe_public_key": stripe_public_key,
+        "stripe_secret_key": stripe_secret_key,
+    }
+
+    return render(request, "donations/donations.html", context)
