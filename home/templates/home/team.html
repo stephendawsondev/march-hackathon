@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
-
+{% load static %}
 {% block title %}Our team{% endblock %}
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/team.css' %}">
+{% endblock %}
 {% block content %}
 
 <div class="container mx-auto px-4">
@@ -19,9 +21,9 @@
                 <div class="text-5xl opacity-30">📝</div></figure>
                 <div class="card-body">
                     <h2 class="card-title">Iliana</h2>
-                    <p class="line-clamp-5">Some info about Lucy Goes here.<br>
-                        Favourite open source project<br>
-                        Favourite Woman in Tech
+                    <p>Some info about Iliana Goes here.<br>
+                        <strong>Favourite open source project:</strong><br>
+                        <strong>Favourite Woman in Tech:</strong>
                     </p>
                 </div>
         </div>

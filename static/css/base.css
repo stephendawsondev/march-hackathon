@@ -26,26 +26,7 @@ p {
   letter-spacing: 2px;
 }
 
-/* Team page styling */
-#iliana-card {
-  background-color: var(--highlight1);
-}
 
-#lucy-card {
-  background-color: var(--highlight2);
-}
-
-#soroush-card {
-  background-color: var(--highlight3);
-}
-
-#stephen-card {
-  background-color: var(--highlight4);
-}
-
-#warren-card {
-  background-color: var(--highlight5);
-}
 
 
 
