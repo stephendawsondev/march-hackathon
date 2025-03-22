@@ -5,9 +5,5 @@ def home(request):
     return render(request, "home/home.html")
 
 
-def about(request):
-    return render(request, "home/about.html")
-
-
 def team(request):
     return render(request, "home/team.html")
