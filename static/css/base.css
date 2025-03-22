@@ -7,6 +7,7 @@
   --highlight2: #7ED957;
   --highlight3: #DD1026;
   --highlight4: #8C52FF;
+  --highlight5: #F5A742;
   --bg: #F4F4F4; /* Light mode background */
   --text: #080D0F; /* Light mode text */
   --font-primary: 'Press Start 2P', sans-serif;
@@ -24,7 +25,6 @@ p {
   font-family: var(--font-secondary);
   letter-spacing: 2px;
 }
-
 
 
 
