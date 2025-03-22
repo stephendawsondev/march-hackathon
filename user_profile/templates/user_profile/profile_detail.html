@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}
 {{ profile_user.username }}'s Profile
 {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'user_profile/css/user_profile.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
@@ -99,4 +105,12 @@
     </div>
     {% endif %}
 </div>
+
+{% include "user_profile/sidebar_favorites.html" %}
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'user_profile/js/favorites_sidebar.js' %}"></script>
 {% endblock %}
