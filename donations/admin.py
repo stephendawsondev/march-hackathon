@@ -3,20 +3,18 @@ from unfold.admin import ModelAdmin
 
 from .models import Payment, ProjectFunding, WITFunding
 
-# from import_export.admin import ImportExportModelAdmin # ImportExportModel functionality
 
-
-class OrderAdmin(admin.ModelAdmin):
+class PaymentAdmin(admin.ModelAdmin):
     readonly_fields = (
         "confirmation_number",
         "created_at",
         "grand_total",
         "stripe_payment_intent_id",
     )
-    field = (
+    fields = (
         "confirmation_number",
+        "user",
         "amount",
-        "created_at",
         "full_name",
         "email",
         "phone_number",
@@ -26,7 +24,10 @@ class OrderAdmin(admin.ModelAdmin):
         "town_or_city",
         "county",
         "country",
+        "created_at",
+        "status",
         "grand_total",
+        "stripe_payment_intent_id",
     )
     list_display = (
         "confirmation_number",
@@ -37,6 +38,16 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)
 
 
-admin.site.register(Payment, OrderAdmin)
-admin.site.register(ProjectFunding)
-admin.site.register(WITFunding)
+class ProjectFundingAdmin(admin.ModelAdmin):
+    list_display = ("project", "payment", "amount", "created_at")
+    ordering = ("-created_at",)
+
+
+class WITFundingAdmin(admin.ModelAdmin):
+    list_display = ("wit", "payment", "amount", "created_at")
+    ordering = ("-created_at",)
+
+
+admin.site.register(Payment, PaymentAdmin)
+admin.site.register(ProjectFunding, ProjectFundingAdmin)
+admin.site.register(WITFunding, WITFundingAdmin)

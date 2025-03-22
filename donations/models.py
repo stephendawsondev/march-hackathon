@@ -46,6 +46,10 @@ class Payment(models.Model):
         """
         if not self.confirmation_number:
             self.confirmation_number = self._generate_confirmation_number()
+
+        # Update the grand total
+        self.grand_total = self.amount
+
         super().save(*args, **kwargs)
 
     def __str__(self):
