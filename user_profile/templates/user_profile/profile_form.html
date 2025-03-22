@@ -15,7 +15,9 @@
           <span>{{ error }}</span>
           {% endfor %}
         </div>
-        {% endif %} {% if profile_form.non_field_errors %}
+        {% endif %}
+
+        {% if profile_form.non_field_errors %}
         <div class="alert alert-error">
           {% for error in profile_form.non_field_errors %}
           <span>{{ error }}</span>
