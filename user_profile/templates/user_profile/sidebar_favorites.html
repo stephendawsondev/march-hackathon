@@ -1,0 +1,25 @@
+{% load static %}
+
+<div id="favorites-sidebar" class="favorites-sidebar closed">
+  <!-- Star buttonv -->
+  <div id="toggle-button" class="toggle-button">
+    <img
+      src="{% static 'images/retro-star.svg' %}"
+      alt="Retro Star"
+      width="32"
+      height="32"
+    >
+  </div>
+
+  <!-- List of favorites -->
+  <div class="favorites-content">
+    <h3>Favorite Projects</h3>
+    <ul>
+      {% for project in favorites %}
+      <li>
+        <a href="{% url 'project_detail' pk=project.pk %}">{{ project.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
