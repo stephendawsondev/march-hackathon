@@ -8,7 +8,7 @@
   --highlight3: #DD1026;
   --highlight4: #8C4FFE;
   --highlight5: #F5A742;
-  --bg: #F4F4F4; /* Light mode background */
+  --bg: #FAFAFA; /* Light mode background */
   --text: #0A0A0B; /* Light mode text */
   --font-primary: 'Press Start 2P', sans-serif;
   --font-secondary: 'Orbitron', sans-serif;
@@ -30,6 +30,8 @@ p {
   height: auto;
   text-align: center;
 }
+
+
 
 
 
